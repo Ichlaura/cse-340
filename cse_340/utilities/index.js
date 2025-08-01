@@ -10,7 +10,7 @@ Util.getNav = async function (req, res, next) {
   
   let list = "<ul>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
-  data.rows.forEach((row) => {
+  data.forEach((row) => {
     list += "<li>"
     list +=
       '<a href="/inv/type/' +
@@ -32,7 +32,6 @@ module.exports = Util
 /* **************************************
 * Build the classification view HTML
 * ************************************ */
-const Util = {} // Si no existe, asegúrate de declarar el objeto Util arriba.
 
 Util.buildClassificationGrid = async function(data){
   let grid = ''
