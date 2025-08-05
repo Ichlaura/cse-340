@@ -32,14 +32,13 @@ module.exports = Util
 /* **************************************
 * Build the classification view HTML
 * ************************************ */
-
 Util.buildClassificationGrid = async function(data){
   let grid = ''
   if(data.length > 0){
     grid = '<ul id="inv-display">'
     data.forEach(vehicle => { 
       grid += '<li>'
-      grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
+      grid +=  '<a href="/inv/detail/'+ vehicle.inv_id 
       + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
       + ' details"><img src="' + vehicle.inv_thumbnail 
       +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
@@ -47,7 +46,7 @@ Util.buildClassificationGrid = async function(data){
       grid += '<div class="namePrice">'
       grid += '<hr />'
       grid += '<h2>'
-      grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
+      grid += '<a href="/inv/detail/' + vehicle.inv_id +'" title="View ' 
       + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
       + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
       grid += '</h2>'
@@ -68,7 +67,7 @@ Util.buildClassificationGrid = async function(data){
  * Build the details view HTML
  * ************************************ */
 Util.buildDetailsGrid = async function (data) {
-    let grid
+    let grid = ''
     if (data.length > 0) {
         grid = '<article id="details-display">'
         grid +=
@@ -100,7 +99,7 @@ Util.buildDetailsGrid = async function (data) {
         grid += '</div>'
         grid += '</article>'
     } else {
-        grid += '<p class="notice">Sorry, no matching vehicles details could be found.</p>'
+        grid = '<p class="notice">Sorry, no matching vehicles details could be found.</p>'
     }
     return grid
 }
@@ -112,6 +111,27 @@ Util.buildDetailsGrid = async function (data) {
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+
+Util.buildReviews = async function (reviewData) {
+  let reviewsHtml = ''
+
+  if (reviewData.length > 0) {
+    reviewsHtml += '<ul class="review-list">'
+    reviewData.forEach((review) => {
+      const screenName = review.screen_name
+      const reviewText = review.review_text
+      const date = new Date(review.review_date).toLocaleDateString('en-US')
+
+      reviewsHtml += `<li><strong>${screenName}</strong> (${date}): <p>${reviewText}</p></li>`
+    })
+    reviewsHtml += '</ul>'
+  } else {
+    reviewsHtml += '<p>No reviews yet. Be the first to leave a review!</p>'
+  }
+
+  return reviewsHtml
+}
 
 
 module.exports = Util

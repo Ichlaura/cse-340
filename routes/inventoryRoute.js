@@ -9,8 +9,7 @@ const utilities = require('../utilities/')
 router.get('/type/:classificationId', utilities.handleErrors(invController.buildByClassificationId))
 
 // Route to build details by InventoryID view
-router.get("/detail/:inv_id", utilities.handleErrors(invController.buildDetailView))
-
+router.get('/detail/:inv_id', utilities.handleErrors(invController.buildByInventoryID))
 
 //route for intentional error 500
 router.get('/error', (req, res, next) => {
@@ -25,6 +24,5 @@ exports.triggerError = (req, res, next) => {
 }
 
 router.get('/error', utilities.handleErrors(invController.triggerError))
-
 
 module.exports = router
