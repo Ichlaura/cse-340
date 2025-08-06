@@ -15,6 +15,10 @@ const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require('./utilities');
 const session = require("express-session")
 const pool = require('./database/')
+const accountRoute = require("./routes/accountRoute")
+
+
+
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -47,19 +51,21 @@ app.use(function(req, res, next){
 /* ***********************
  * Routes
  *************************/
-app.use(static)
-app.use(express.static("public"))
+app.use(require("./routes/static"))
 
-// Index route
+// Index route - unit 3,activity
 app.get("/", utilities.handleErrors(baseController.buildHome))
 
-// Inventory routes
+// Inventory routes - unit 3, activity
 app.use('/inv', utilities.handleErrors(inventoryRoute))
+//Account routes - Unit 4, activity
+//app.use("/account", require("./routes/accountRoute"))
+app.use("/account", accountRoute)
+
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
-
 
 /* ***********************
  * Local Server Information
