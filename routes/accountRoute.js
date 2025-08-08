@@ -15,11 +15,27 @@ const utilities = require("../utilities")
 *Unit 4, deliver login view activity
 * ************************************ */
 
+
+router.get("/verificacion", (req, res) => {
+  res.send("¡Verificación exitosa!");
+});
+
+
+
 router.get("/login", utilities.handleErrors(accountController.buildLogin))
 //unit 4 
 //Deliver Registration View
 router.get("/register", utilities.handleErrors(accountController.buildRegister))
 // Process the registration form
 router.post("/register", utilities.handleErrors(accountController.registerAccount))
+
+
+//testingborrar esto
+
+//router.post("/register", (req, res) => {
+ // console.log("Datos recibidos:", req.body)
+  //res.send("Recibido el formulario POST /register")
+//})
+
 
 module.exports = router

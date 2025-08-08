@@ -37,7 +37,7 @@ async function buildRegister(req, res, next) {
 
 
 /* ****************************************
-*  Process Registration
+*  Process Registration account
 * *************************************** */
 async function registerAccount(req, res) {
   let nav = await utilities.getNav()
@@ -50,6 +50,9 @@ async function registerAccount(req, res) {
     account_password
   )
 
+    console.log("regResult:", regResult) // <-- Agrega esto
+
+
   if (regResult) {
     req.flash(
       "notice",
@@ -58,15 +61,21 @@ async function registerAccount(req, res) {
     res.status(201).render("account/login", {
       title: "Login",
       nav,
+  errors: null
+
     })
   } else {
     req.flash("notice", "Sorry, the registration failed.")
     res.status(501).render("account/register", {
       title: "Registration",
       nav,
+            errors: null  // <-- Esta es la línea que debes agregar aquí
+
     })
   }
 }
+
+
 
 
 module.exports = {
