@@ -54,10 +54,62 @@ async function getInventoryById(inv_id) {
     }
 }
 
+/* ***************************
+ *  Insert new classification
+ * ************************** */
+async function insertClassification(classification_name) {
+  try {
+    const sql = 'INSERT INTO public.classification (classification_name) VALUES ($1)';
+    const values = [classification_name];
+    await pool.query(sql, values);
+  } catch (error) {
+    console.error('insertClassification error: ' + error);
+    throw error;
+  }
+}
 
+
+async function insertInventory({
+  classification_id,
+  inv_year,
+  inv_make,
+  inv_model,
+  inv_description,
+  inv_image,
+  inv_thumbnail,
+  inv_price,
+  inv_miles,
+  inv_color
+}) {
+  try {
+    const sql = `INSERT INTO inventory 
+      (classification_id, inv_year, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`
+
+    const result = await pool.query(sql, [
+      classification_id,
+      inv_year,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color
+    ])
+
+    return result.rowCount > 0
+  } catch (error) {
+    throw error
+  }
+}
 module.exports = {
   getClassifications,
   getClassificationById,
   getInventoryByClassificationId,
-  getInventoryById
+  getInventoryById,
+  insertClassification,
+   insertInventory  // <-- aquí la agregas
+
 }
