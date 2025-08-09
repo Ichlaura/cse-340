@@ -6,6 +6,7 @@
 * ************************************ */
 const utilities = require('../utilities');
 const accountModel = require("../models/account-model")
+const bcrypt = require("bcryptjs");
 
 /* *************************************
 * Deliver login view
@@ -63,7 +64,7 @@ if (errors.length > 0) {
   return res.status(400).render('account/register', {
     title: 'Register',
     nav,
-    errors: null,
+    errors,
     account_firstname,
     account_lastname,
     account_email,
@@ -72,12 +73,31 @@ if (errors.length > 0) {
 }
 
 
+   // Aquí agregamos el hash de la contraseña
+  let hashedPassword;
+  try {
+    hashedPassword = await bcrypt.hashSync(account_password, 10);
+  } catch (error) {
+    req.flash("notice", 'Sorry, there was an error processing the registration.');
+    return res.status(500).render("account/register", {
+      title: "Registration",
+      nav,
+      errors: null,
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_password: ''
+    });
+  }
+
+  // Llama la función de modelo con la contraseña hasheada
   const regResult = await accountModel.registerAccount(
     account_firstname,
     account_lastname,
     account_email,
-    account_password
-  )
+    hashedPassword
+  );
+
 
     console.log("regResult:", regResult) // <-- Agrega esto
 
