@@ -63,7 +63,7 @@ if (errors.length > 0) {
   return res.status(400).render('account/register', {
     title: 'Register',
     nav,
-    errors,
+    errors: null,
     account_firstname,
     account_lastname,
     account_email,

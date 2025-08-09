@@ -10,6 +10,7 @@ const router = new express.Router()
 const accountController = require("../controllers/accountController")
 const utilities = require("../utilities")
 const regValidate = require('../utilities/account-validation');
+const validate = require("../utilities/account-validation");
 
 /* *************************************
 * Deliver Login View
@@ -46,5 +47,13 @@ router.post(
   //res.send("Recibido el formulario POST /register")
 //})
 
+
+// Process the login attempt
+router.post(
+  "/login",
+  (req, res) => {
+    res.status(200).send('login process')
+  }
+)
 
 module.exports = router
