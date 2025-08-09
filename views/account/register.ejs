@@ -3,17 +3,22 @@
 <h1><%= title %></h1>
 <% } else { res.redirect('/') } %>
 
-<!-- Message Block -->
-<%- messages() %> <% if (errors) { %>
-<ul class="notice">
-    <% errors.array().forEach(error => { %>
-    <li><%= error.msg %></li>
-    <% }) %>
-</ul>
-<% } %>
+
+
 
 <div class="container">
     <div class="registration-container">
+
+<!-- Mensajes de error -->
+<% if (errors && errors.length > 0) { %>
+  <ul class="notice">
+    <% errors.forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+
 <form action="/account/register" method="post">
             <div class="input">
                 <label for="account_firstname">First Name<span class="required">*</span></label>

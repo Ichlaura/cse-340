@@ -43,6 +43,35 @@ async function registerAccount(req, res) {
   let nav = await utilities.getNav()
   const { account_firstname, account_lastname, account_email, account_password } = req.body
 
+const errors = [];
+
+if (!account_firstname || account_firstname.trim() === '') {
+  errors.push({ msg: 'First name is required' });
+}
+if (!account_lastname || account_lastname.trim() === '') {
+  errors.push({ msg: 'Last name is required' });
+}
+if (!account_email || !account_email.includes('@')) {
+  errors.push({ msg: 'A valid email is required' });
+}
+if (!account_password || account_password.length < 12) {
+  errors.push({ msg: 'Password must be at least 12 characters' });
+}
+
+
+if (errors.length > 0) {
+  return res.status(400).render('account/register', {
+    title: 'Register',
+    nav,
+    errors,
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_password: ''
+  });
+}
+
+
   const regResult = await accountModel.registerAccount(
     account_firstname,
     account_lastname,
