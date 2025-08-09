@@ -23,7 +23,8 @@
                     name="account_email"
                     required
                     value="<%= locals.account_email %>"
-                    pattern="^[a-zA-Z0-9._%±]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$"
+                   
+                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                     title="Enter a valid email address (e.g., user@example.com)"
                     placeholder="Enter your email"
                 />
@@ -35,7 +36,8 @@
                     id="account_password"
                     name="account_password"
                     required
-                    pattern="(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{12,}"
+                   
+                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
                     title="Password must be at least 12 characters long and include at least one capital letter, one number, and one special character."
                     placeholder="Enter your secure password"
                 />
