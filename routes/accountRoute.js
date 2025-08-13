@@ -60,6 +60,7 @@ router.post(
 // Entrega la vista de gestión de cuenta
 router.get(
   "/",
+    utilities.checkLogin,
   utilities.handleErrors(accountController.buildManagement)
 )
 
