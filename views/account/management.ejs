@@ -1,0 +1,12 @@
+<h1>You're logged in</h1>
+<% if (messages.notice) { %>
+  <div class="notice"><%= messages.notice %></div>
+<% } %>
+
+<% if (errors) { %>
+  <div class="errors">
+    <% errors.forEach(function(err){ %>
+      <p><%= err.msg %></p>
+    <% }) %>
+  </div>
+<% } %>
