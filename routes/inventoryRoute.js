@@ -7,7 +7,6 @@ const validate = require('../utilities/validation-middleware');
 const classificationRules = require('../utilities/classification-validation');
 const { validateInventory } = require('../utilities/inventoryValidation');
 
-
 // Route to build inventory by classification view
 router.get('/type/:classificationId', utilities.handleErrors(invController.buildByClassificationId))
 
@@ -50,6 +49,34 @@ router.get(
   "/edit/:inv_id",
   utilities.handleErrors(invController.editInventoryView)
 )
+
+
+
+
+
+
+
+
+
+
+// Edit inventory view route
+router.get(
+  "/edit/:inv_id",
+  utilities.handleErrors(invController.editInventoryView)
+)
+
+router.post(
+  "/update/",
+  validate.newInventoryRules(),
+  validate.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+);
+
+
+
+
+
+
 
 // Route for intentional error 500
 router.get('/error', utilities.handleErrors(invController.triggerError))
