@@ -58,6 +58,9 @@ function checkUpdateData(req, res, next) {
   next();
 }
 
+
+
+
 module.exports = {
   checkClassificationData,
   newInventoryRules,

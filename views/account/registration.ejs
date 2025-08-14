@@ -3,26 +3,18 @@
 <h1><%= title %></h1>
 <% } else { res.redirect('/') } %>
 
-
-
+<!-- Message Block -->
+<%- messages() %> <% if (errors) { %>
+<ul class="notice">
+    <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+    <% }) %>
+</ul>
+<% } %>
 
 <div class="container">
     <div class="registration-container">
-
-<!-- Mensajes de error -->
-
-
-<% if (errors) { %>
-  <ul class="notice">
-    <% errors.array().forEach(error => { %>
-      <li><%= error.msg %></li>
-    <% }) %>
-  </ul>
-<% } %>
-
-
-
-<form action="/account/register" method="post">
+        <form id="registrationForm" class="form-container" action="/account/registration" method="post">
             <div class="input">
                 <label for="account_firstname">First Name<span class="required">*</span></label>
                 <input
@@ -63,8 +55,7 @@
                     id="account_password"
                     name="account_password"
                     required
-            
-                     pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+                    pattern="(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{12,}"
                     title="Password must be at least 12 characters long and include at least one capital letter, one number, and one special character."
                     placeholder="Enter a secure password"
                 />

@@ -1,85 +1,69 @@
-// Needed Resources 
-const express = require("express")
-const router = new express.Router() 
-const invController = require("../controllers/invController")
+// Needed Resources
+const express = require('express')
+const router = new express.Router()
+const invController = require('../controllers/invController')
+const revController = require('../controllers/reviewController')
 const utilities = require('../utilities/')
-const validate = require('../utilities/validation-middleware');
-const classificationRules = require('../utilities/classification-validation');
-const { validateInventory } = require('../utilities/inventoryValidation');
+const regValidate = require('../utilities/inventory-validation')
 
 // Route to build inventory by classification view
 router.get('/type/:classificationId', utilities.handleErrors(invController.buildByClassificationId))
 
 // Route to build details by InventoryID view
-router.get('/detail/:inv_id', utilities.handleErrors(invController.buildByInventoryID))
+router.get('/detail/:inventoryId', utilities.handleErrors(invController.buildByInventoryID))
+
 // Route to build Inventory Management view
-// Route to build main inventory view
-router.get("/", utilities.handleErrors(invController.buildManagementView))
+router.get('/', utilities.checkAccountType, utilities.handleErrors(invController.buildByInvManagement))
 
-router.get('/management', utilities.handleErrors(invController.buildManagementView));
+// Route to build Add Classification View
+router.get('/add-classification', utilities.handleErrors(invController.buildByAddClassification))
 
-
-// Mostrar formulario (GET)
-router.get('/add-classification', utilities.handleErrors(invController.buildAddClassification));
-
-// Procesar formulario (POST)
+// Route to handle Add Classification
 router.post(
-  '/add-classification',
-  classificationRules(),
-  validate.checkClassificationData,
-  utilities.handleErrors(invController.addClassification)
-);
+    '/add-classification',
+    regValidate.classificationRules(),
+    regValidate.checkClassificationData,
+    utilities.handleErrors(invController.addClassification)
+)
 
+// Route to build Add Inventory View
+router.get('/add-inventory', utilities.handleErrors(invController.buildByAddInventory))
 
-// Ruta para mostrar el formulario para agregar inventario
-router.get('/add-inventory', utilities.handleErrors(invController.buildAddInventory));
-
-// Ruta para procesar el formulario con validación
-router.post('/add-inventory', validateInventory, utilities.handleErrors(invController.addInventory));
-
-
+// Route to handle Add Inventory
+router.post(
+    '/add-inventory',
+    regValidate.inventoryRules(),
+    regValidate.checkInventoryData,
+    utilities.handleErrors(invController.addInventory)
+)
 
 // Route to build Get Inventory View
-router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
-
-
-
-// Edit inventory view route
 router.get(
-  "/edit/:inv_id",
-  utilities.handleErrors(invController.editInventoryView)
+    '/getInventory/:classification_id',
+    utilities.checkAccountType,
+    utilities.handleErrors(invController.getInventoryJSON)
 )
 
+// Route to build Edit Inventory View
+router.get('/edit/:inventoryId', utilities.checkAccountType, utilities.handleErrors(invController.buildByEditInventory))
 
-
-
-
-
-
-
-
-
-// Edit inventory view route
-router.get(
-  "/edit/:inv_id",
-  utilities.handleErrors(invController.editInventoryView)
-)
-
+// Route to handle Edit/Update Inventory
 router.post(
-  "/update/",
-  validate.newInventoryRules(),
-  validate.checkUpdateData,
-  utilities.handleErrors(invController.updateInventory)
-);
+    '/update/',
+    regValidate.inventoryRules(),
+    regValidate.checkInventoryData,
+    utilities.handleErrors(invController.updateInventory)
+)
 
+// Route to build Delete Inventory View
+router.get(
+    '/delete/:inventoryId',
+    utilities.checkAccountType,
+    utilities.handleErrors(invController.buildByDeleteInventory)
+)
 
-
-
-
-
-
-// Route for intentional error 500
-router.get('/error', utilities.handleErrors(invController.triggerError))
+// Route to handle Delete Inventory
+router.post('/delete/', utilities.handleErrors(invController.deleteInventory))
 
 
 module.exports = router

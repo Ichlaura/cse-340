@@ -14,7 +14,7 @@
 
 <div class="container">
     <div class="login-container">
-<form id="loginForm" action="/account/login" method="post">
+        <form id="loginForm" class="form-container" action="/account/login" method="post">
             <div class="input">
                 <label for="account_email">Email</label>
                 <input
@@ -23,8 +23,7 @@
                     name="account_email"
                     required
                     value="<%= locals.account_email %>"
-                   
-                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                    pattern="^[a-zA-Z0-9._%±]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$"
                     title="Enter a valid email address (e.g., user@example.com)"
                     placeholder="Enter your email"
                 />
@@ -36,8 +35,7 @@
                     id="account_password"
                     name="account_password"
                     required
-                   
-                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+                    pattern="(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{12,}"
                     title="Password must be at least 12 characters long and include at least one capital letter, one number, and one special character."
                     placeholder="Enter your secure password"
                 />
@@ -53,7 +51,7 @@
             <div class="submit-button">
                 <button type="submit">Login</button>
             </div>
-            <h3>No Account? <a href="/account/register">Sign-up</a></h3>
+            <h3>No Account? <a href="/account/registration">Sign-up</a></h3>
         </form>
     </div>
 </div>

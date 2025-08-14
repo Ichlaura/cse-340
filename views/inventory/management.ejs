@@ -6,13 +6,7 @@
 <% } else { res.redirect('/') } %>
 
 <!-- Message Block -->
-<% if (messages && messages.message) { %>
-  <div class="flash-message <%= messages.type || 'info' %>">
-    <%= messages.message %>
-  </div>
-<% } %>
-
-<% if (errors) { %>
+<%- messages() %> <% if (errors) { %>
 <ul class="notice">
     <% errors.array().forEach(error => { %>
     <li><%= error.msg %></li>
