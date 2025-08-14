@@ -15,6 +15,8 @@ router.get('/type/:classificationId', utilities.handleErrors(invController.build
 router.get('/detail/:inv_id', utilities.handleErrors(invController.buildByInventoryID))
 // Route to build Inventory Management view
 // Route to build main inventory view
+router.get("/", utilities.handleErrors(invController.buildManagementView))
+
 router.get('/management', utilities.handleErrors(invController.buildManagementView));
 
 
@@ -33,6 +35,11 @@ router.get('/add-inventory', utilities.handleErrors(invController.buildAddInvent
 
 // Ruta para procesar el formulario con validación
 router.post('/add-inventory', validateInventory, utilities.handleErrors(invController.addInventory));
+
+
+
+// Route to build Get Inventory View
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
 
 // Route for intentional error 500
