@@ -30,6 +30,8 @@ router.post(
   validate.checkClassificationData,
   utilities.handleErrors(invController.addClassification)
 );
+
+
 // Ruta para mostrar el formulario para agregar inventario
 router.get('/add-inventory', utilities.handleErrors(invController.buildAddInventory));
 
@@ -41,6 +43,13 @@ router.post('/add-inventory', validateInventory, utilities.handleErrors(invContr
 // Route to build Get Inventory View
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
+
+
+// Edit inventory view route
+router.get(
+  "/edit/:inv_id",
+  utilities.handleErrors(invController.editInventoryView)
+)
 
 // Route for intentional error 500
 router.get('/error', utilities.handleErrors(invController.triggerError))
